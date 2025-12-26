@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head><title>Configure Address</title></head>
+<body>
+    <h2>Configure Address</h2>
+    <form method="POST">
+        <label>Street Address:</label><br>
+        <input type="text" name="address" value="{{ current_address }}" style="width:300px;" required>
+        <br><br>
+        <button type="submit">Save Address & Done</button>
+    </form>
+    <br>
+    <a href="{{ url_for('main_page') }}">Cancel</a>
+</body>
+</html>

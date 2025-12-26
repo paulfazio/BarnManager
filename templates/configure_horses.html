@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head><title>Configure Horses</title></head>
+<body>
+    <h2>Configure Horses & Blankets</h2>
+    
+    <form method="POST">
+        <input type="text" name="horse_name" placeholder="Horse Name" required>
+        <button type="submit">Add Horse</button>
+    </form>
+
+    {% for item in horse_data %}
+        <div style="border:1px solid #ddd; padding:10px; margin:10px 0;">
+            <h3>{{ item.horse.name }} <a href="{{ url_for('delete_horse', horse_id=item.horse.id) }}">[Delete]</a></h3>
+            {% for b in item.blankets %}
+                <p> - {{ b.name }} ({{ b.min_temp }} to {{ b.max_temp }})</p>
+            {% endfor %}
+            <form action="{{ url_for('add_blanket', horse_id=item.horse.id) }}" method="POST">
+                <input type="text" name="blanket_name" placeholder="Blanket" required>
+                <input type="number" name="min_temp" placeholder="Min" size="3">
+                <input type="number" name="max_temp" placeholder="Max" size="3">
+                <button type="submit">Add Blanket</button>
+            </form>
+        </div>
+    {% endfor %}
+
+    <hr>
+    <a href="{{ url_for('main_page') }}"><button type="button">Done</button></a>
+</body>
+</html>

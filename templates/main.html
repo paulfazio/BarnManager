@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head><title>Horse Care Hub</title></head>
+<body>
+    <h1>Horse Care Dashboard</h1>
+    <p><strong>Current Saved Address:</strong> {{ address }}</p>
+    <hr>
+    <ul>
+        <li><a href="{{ url_for('configure_horses') }}">Configure Horses & Blankets</a></li>
+        <li><a href="{{ url_for('configure_address') }}">Configure Address</a></li>
+    </ul>
+</body>
+</html>

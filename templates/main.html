@@ -1,13 +1,47 @@
 <!DOCTYPE html>
 <html>
-<head><title>Horse Care Hub</title></head>
+<head>
+    <title>Horse Blanket Hub</title>
+    <style>
+        .weather-box { background: #eef; padding: 15px; border-radius: 8px; margin-bottom: 20px; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        .alert { color: #d9534f; font-weight: bold; }
+    </style>
+</head>
 <body>
     <h1>Horse Care Dashboard</h1>
-    <p><strong>Current Saved Address:</strong> {{ address }}</p>
+    
+    {% if not address %}
+        <p>Please <a href="{{ url_for('configure_address') }}">set an address</a> to see weather and recommendations.</p>
+    {% elif not weather %}
+        <p>Could not retrieve weather for: {{ address }}. Check your address format.</p>
+    {% else %}
+        <div class="weather-box">
+            <h3>24-Hour Forecast for {{ address }}</h3>
+            <p><strong>Avg Temp:</strong> {{ "%.1f"|format(weather.avg_temp) }}°F</p>
+            <p><strong>Lowest Wind Chill:</strong> {{ "%.1f"|format(weather.min_chill) }}°F</p>
+            {% if weather.total_precip > 0.05 %}
+                <p class="alert">Notice: Rain or Snow is likely ({{ "%.2f"|format(weather.total_precip) }}").</p>
+            {% endif %}
+        </div>
+
+        <h2>Recommendations</h2>
+        <table>
+            <tr><th>Horse</th><th>Recommended Blanket</th></tr>
+            {% for rec in recs %}
+            <tr>
+                <td>{{ rec.name }}</td>
+                <td><strong>{{ rec.recommendation }}</strong></td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+
     <hr>
-    <ul>
-        <li><a href="{{ url_for('configure_horses') }}">Configure Horses & Blankets</a></li>
-        <li><a href="{{ url_for('configure_address') }}">Configure Address</a></li>
-    </ul>
+    <nav>
+        <a href="{{ url_for('configure_horses') }}">Manage Horses & Blankets</a> | 
+        <a href="{{ url_for('configure_address') }}">Update Address</a>
+    </nav>
 </body>
 </html>

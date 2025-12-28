@@ -24,6 +24,15 @@
         </div>
     {% endfor %}
 
+    <div class="card">
+        <h4>Add Medication</h4>
+        <form action="{{ url_for('add_medication', horse_id=item.horse.id) }}" method="POST">
+            <input type="text" name="med_name" placeholder="Med Name" required>
+            <input type="text" name="dose" placeholder="Dose (e.g. 2 scoops)" required>
+            <input type="text" name="schedule_time" placeholder="Time (e.g. 8:00 AM)" required>
+            <button type="submit">Add Med</button>
+        </form>
+    </div>
     <hr>
     <a href="{{ url_for('main_page') }}"><button type="button">Done</button></a>
 </body>

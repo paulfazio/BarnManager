@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head><title>Medication History</title></head>
+<body>
+    <h1>History for {{ horse.name }}</h1>
+    <a href="{{ url_for('main_page') }}">Back to Dashboard</a>
+    <hr>
+    <table border="1" cellpadding="10">
+        <tr>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Medication</th>
+            <th>Dose</th>
+        </tr>
+        {% for log in history %}
+        <tr>
+            <td>{{ log.admin_date }}</td>
+            <td>{{ log.admin_time }}</td>
+            <td>{{ log.med_name }}</td>
+            <td>{{ log.dose }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

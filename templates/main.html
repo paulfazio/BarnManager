@@ -38,6 +38,27 @@
             {% endif %}
         </div>
 
+        {% for data in horse_data %}
+        <div class="card">
+            <h3>{{ data.info.name }}</h3>
+            <a href="{{ url_for('view_history', horse_id=data.info.id) }}">View Med History</a>
+            
+            <h4>Today's Meds:</h4>
+            <ul>
+                {% for med in data.meds %}
+                <li>
+                    {{ med.schedule_time }} - {{ med.med_name }} ({{ med.dose }})
+                    {% if med.id in data.given_ids %}
+                        ✅ <em>Given</em>
+                    {% else %}
+                        <a href="{{ url_for('log_medication', med_id=med.id, horse_id=data.info.id) }}">Mark as Done</a>
+                    {% endif %}
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endfor %}
+
         <div class="card">
             <h3>Barn Inventory</h3>
             <form action="{{ url_for('set_inventory') }}" method="POST" id="inventoryForm">
@@ -64,27 +85,7 @@
             <p style="font-size: 0.8em; color: #666; margin-top: 15px;">
                 <em>Inventory updates automatically on selection.</em>
             </p>
-        </div>
-
-        <!--
-        <div class="card">
-            <h3>Barn Inventory</h3>
-            <div class="inventory-item">
-                <span><strong>Bales of Hay:</strong> {{ settings.hay }}</span>
-                <div>
-                    <a href="{{ url_for('update_inventory', item='hay', delta=-1) }}" class="btn">-</a>
-                    <a href="{{ url_for('update_inventory', item='hay', delta=1) }}" class="btn">+</a>
-                </div>
-            </div>
-            <div class="inventory-item">
-                <span><strong>Bags of Shavings:</strong> {{ settings.shavings }}</span>
-                <div>
-                    <a href="{{ url_for('update_inventory', item='shavings', delta=-1) }}" class="btn">-</a>
-                    <a href="{{ url_for('update_inventory', item='shavings', delta=1) }}" class="btn">+</a>
-                </div>
-            </div>
-        </div>
-        -->
+        </div>             
     </div>
 
     <hr>

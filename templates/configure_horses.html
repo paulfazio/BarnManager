@@ -11,28 +11,30 @@
 
     {% for item in horse_data %}
         <div style="border:1px solid #ddd; padding:10px; margin:10px 0;">
-            <h3>{{ item.horse.name }} <a href="{{ url_for('delete_horse', horse_id=item.horse.id) }}">[Delete]</a></h3>
-            {% for b in item.blankets %}
-                <p> - {{ b.name }} ({{ b.min_temp }} to {{ b.max_temp }})</p>
-            {% endfor %}
-            <form action="{{ url_for('add_blanket', horse_id=item.horse.id) }}" method="POST">
-                <input type="text" name="blanket_name" placeholder="Blanket" required>
-                <input type="number" name="min_temp" placeholder="Min" size="3">
-                <input type="number" name="max_temp" placeholder="Max" size="3">
-                <button type="submit">Add Blanket</button>
-            </form>
+            <div class="card">
+                <h3>{{ item.horse.name }} <a href="{{ url_for('delete_horse', horse_id=item.horse.id) }}">[Delete]</a></h3>
+                {% for b in item.blankets %}
+                    <p> - {{ b.name }} ({{ b.min_temp }} to {{ b.max_temp }})</p>
+                {% endfor %}
+                <form action="{{ url_for('add_blanket', horse_id=item.horse.id) }}" method="POST">
+                    <input type="text" name="blanket_name" placeholder="Blanket" required>
+                    <input type="number" name="min_temp" placeholder="Min" size="3">
+                    <input type="number" name="max_temp" placeholder="Max" size="3">
+                    <button type="submit">Add Blanket</button>
+                </form>
+            </div>
+            <div class="card">
+                <h4>Add Medication</h4>
+                <form action="{{ url_for('add_medication', horse_id=item.horse.id) }}" method="POST">
+                    <input type="text" name="med_name" placeholder="Med Name" required>
+                    <input type="text" name="dose" placeholder="Dose (e.g. 2 scoops)" required>
+                    <input type="text" name="schedule_time" placeholder="Time (e.g. 8:00 AM)" required>
+                    <button type="submit">Add Med</button>
+                </form>
+            </div>
         </div>
     {% endfor %}
 
-    <div class="card">
-        <h4>Add Medication</h4>
-        <form action="{{ url_for('add_medication', horse_id=item.horse.id) }}" method="POST">
-            <input type="text" name="med_name" placeholder="Med Name" required>
-            <input type="text" name="dose" placeholder="Dose (e.g. 2 scoops)" required>
-            <input type="text" name="schedule_time" placeholder="Time (e.g. 8:00 AM)" required>
-            <button type="submit">Add Med</button>
-        </form>
-    </div>
     <hr>
     <a href="{{ url_for('main_page') }}"><button type="button">Done</button></a>
 </body>
